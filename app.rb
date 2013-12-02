@@ -1,24 +1,23 @@
-require './lib/artist'
-require './lib/song'
-require './lib/genre'
+require './parser'
+require 'awesome_print'
 
-
-
-#parser in separate file??
-the_songs= Dir.entries("data")
-
-#put into a class?
 
 def browsing
   puts "Browse by artist or genre"
+  browse_choice = gets.chomp.downcase
+  parser = Parser.new
+  catalog = parser.parse_songs
 
-  browse_choice = gets.chomp.lower!
-  
   if browse_choice == "artist"
     #print list of all artists alphabetically with song count.
+    catalog.each do |file|
+      ap file[0]
+    end
+
     #include number of artists in list
     #user select artist
     #print out a list of songs and genres for that artist
+
   elsif browse_choice == "genre"
     #print list of all genres sorted by the amount of songs
     #the number of songs and number artists per genre should be included
@@ -33,8 +32,7 @@ def browsing
     puts "Sorry I did not understand"
     browsing
   end
+end
 
-
-song_list= the_songs(songs_array)
 browsing
 
