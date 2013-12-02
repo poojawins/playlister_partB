@@ -10,22 +10,36 @@ def browsing
   if browse_choice == "artist"
     #print list of all unique artists alphab with song count
     new_catalog = []
+    artist_songs = {}
     catalog.each do |file|
       new_catalog << file[0]
+      if artist_songs[file[0]].nil?
+        artist_songs[file[0]] = 1
+      else
+        artist_songs[file[0]] += 1
+      end
     end
+
     new_catalog.uniq!
-    puts new_catalog
+    artist_songs.each do |artist, count|
+      puts "#{artist} - #{count} song(s)"
+    end
     puts "There are #{new_catalog.count} artists in this list."
     
     puts "Select an artist"
     which_artist = gets.chomp
+    artist_genre = {}
      #print out a list of songs and genres for that artist
-    artist_song = catalog.collect do |file|
+    catalog.each do |file|
       if file[0] == which_artist
-        file[1]
+        artist_genre[file[1]] = file[2]
       end
+     
     end
-    puts artist_song.compact 
+
+    artist_genre.each do |song, genre|
+      puts "#{song} - #{genre}"
+    end
    
   elsif browse_choice == "genre"
     #print list of all genres sorted by the amount of songs
